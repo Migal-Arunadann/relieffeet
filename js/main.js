@@ -4,6 +4,10 @@
 (function () {
   "use strict";
 
+  // JS is alive — enable the progressive layers (sticky call bar, drawer a11y)
+  document.documentElement.classList.remove("no-js");
+  document.body && document.body.classList.remove("no-js");
+
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------------------------------------------------------------
@@ -17,23 +21,42 @@
   }
 
   /* ---------------------------------------------------------------
-     2. Mobile burger menu
+     2. Mobile burger menu — slide-down drawer with scrim
   --------------------------------------------------------------- */
   const burger = document.querySelector(".burger");
   const navLinks = document.querySelector(".nav-links");
   if (burger && navLinks) {
-    burger.addEventListener("click", () => {
-      const open = burger.getAttribute("aria-expanded") === "true";
-      burger.setAttribute("aria-expanded", String(!open));
-      navLinks.classList.toggle("open", !open);
-      document.body.style.overflow = !open ? "hidden" : "";
+    // scrim layer (created once, used to close by tapping outside)
+    let scrim = document.querySelector(".nav-scrim");
+    if (!scrim) {
+      scrim = document.createElement("div");
+      scrim.className = "nav-scrim";
+      scrim.setAttribute("aria-hidden", "true");
+      document.body.appendChild(scrim);
+    }
+    const setOpen = (open) => {
+      burger.setAttribute("aria-expanded", String(open));
+      navLinks.classList.toggle("open", open);
+      navLinks.inert = open ? false : true;   // keep hidden links out of tab order
+      document.body.classList.toggle("nav-open", open);
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+    navLinks.inert = !navLinks.classList.contains("open");
+    burger.addEventListener("click", () =>
+      setOpen(burger.getAttribute("aria-expanded") !== "true")
+    );
+    scrim.addEventListener("click", () => setOpen(false));
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860 && navLinks.classList.contains("open")) setOpen(false);
     });
     navLinks.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => {
-        burger.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("open");
-        document.body.style.overflow = "";
-      })
+      a.addEventListener("click", () => setOpen(false))
     );
   }
 
@@ -250,4 +273,18 @@
   document.querySelectorAll("[data-year]").forEach((el) => {
     el.textContent = new Date().getFullYear();
   });
+
+  /* ---------------------------------------------------------------
+     11. Mobile sticky call bar — injected so it only exists when
+         JS runs (CSS keeps it hidden under .no-js anyway)
+  --------------------------------------------------------------- */
+  if (!document.querySelector(".m-callbar")) {
+    const bar = document.createElement("div");
+    bar.className = "m-callbar";
+    bar.innerHTML =
+      '<a href="tel:+917010474579" aria-label="Call Relief Feet now at 070104 74579">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+      "Call · Open 24 hours</a>";
+    document.body.appendChild(bar);
+  }
 })();
