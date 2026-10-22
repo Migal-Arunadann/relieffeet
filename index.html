@@ -123,7 +123,65 @@
         </div>
 
         <div class="hero-figure floaty--slow floaty">
-          <img src="assets/Relief%20Feet%20Wellness%20Logo.png" alt="Relief Feet Wellness logo" width="2079" height="756" />
+          <!-- Reflexology illustration: foot map with pressing zones + therapist thumb, animated in pure CSS -->
+          <svg class="hero-foot" viewBox="0 0 360 420" role="img" aria-label="Illustration of a foot reflexology map — pressure zones on the sole light up while a therapist's thumb works the ball of the foot">
+            <!-- ambient sun ring behind the foot -->
+            <g class="hf-sun-ring">
+              <circle class="hf-sun" cx="188" cy="205" r="152" stroke-dasharray="4 26"/>
+            </g>
+
+            <!-- toes (big toe first) -->
+            <ellipse class="hf-toe" cx="196" cy="70" rx="24" ry="30" transform="rotate(-6 196 70)"/>
+            <ellipse class="hf-toe" cx="243" cy="86" rx="14" ry="18" transform="rotate(10 243 86)"/>
+            <ellipse class="hf-toe" cx="272" cy="112" rx="12" ry="15" transform="rotate(20 272 112)"/>
+            <ellipse class="hf-toe" cx="290" cy="141" rx="10" ry="13" transform="rotate(30 290 141)"/>
+            <ellipse class="hf-toe" cx="298" cy="171" rx="9" ry="11" transform="rotate(40 298 171)"/>
+
+            <!-- sole outline: heel → arch → ball → toes → outer edge -->
+            <path class="hf-sole" d="M 196 100
+                     C 140 118 104 168 100 232
+                     C 96 296 128 352 192 356
+                     C 256 360 296 316 306 250
+                     C 314 196 300 140 262 110
+                     C 240 94 216 94 196 100 Z"/>
+
+            <!-- reflex zone bands across the sole -->
+            <path class="hf-line" d="M 118 172 C 170 148 244 150 296 178"/>
+            <path class="hf-line" d="M 110 226 C 168 202 250 204 304 232"/>
+            <path class="hf-line" d="M 122 286 C 176 264 244 266 292 292"/>
+
+            <!-- glowing pressure points -->
+            <g>
+              <circle class="hf-zone" cx="200" cy="150" r="20"/>
+              <circle class="hf-point hf-point-lg" cx="200" cy="150" r="7"/>
+              <circle class="hf-ring hf-ring-lg" cx="200" cy="150" r="10"/>
+
+              <circle class="hf-zone" cx="152" cy="212" r="16" style="opacity:.28"/>
+              <circle class="hf-point hf-point-sm" cx="152" cy="212" r="6" style="animation-delay:.7s"/>
+              <circle class="hf-ring hf-ring-sm" cx="152" cy="212" r="8" style="animation-delay:.7s"/>
+
+              <circle class="hf-zone" cx="238" cy="296" r="16" style="opacity:.28"/>
+              <circle class="hf-point hf-point-sm" cx="238" cy="296" r="6" style="animation-delay:1.3s"/>
+              <circle class="hf-ring hf-ring-sm" cx="238" cy="296" r="8" style="animation-delay:1.3s"/>
+            </g>
+
+            <!-- therapist hand working the ball of the foot -->
+            <g class="hf-hand-g">
+              <rect class="hf-cuff" x="318" y="10" width="34" height="58" rx="10" transform="rotate(38 335 39)"/>
+              <path class="hf-hand" d="M 352 58
+                       C 330 84 296 112 262 132
+                       C 240 145 218 152 204 148
+                       C 190 144 192 126 208 116
+                       C 236 98 272 72 296 46
+                       C 310 31 336 26 352 58 Z"/>
+              <ellipse class="hf-thumb" cx="206" cy="136" rx="17" ry="13" transform="rotate(-24 206 136)"/>
+            </g>
+
+            <!-- relief sparkles -->
+            <path class="hf-spark" d="M 84 120 l 5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5 z"/>
+            <path class="hf-spark" d="M 60 250 l 4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4 z" style="animation-delay:1.1s"/>
+            <path class="hf-spark" d="M 322 330 l 4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4 z" style="animation-delay:1.9s"/>
+          </svg>
           <span class="badge-float gold floaty" style="--rot:-4deg; top:6%; left:-8%">★ 5.0 on Google · 86 reviews</span>
           <span class="badge-float jade floaty--slow floaty" style="--rot:3deg; bottom:10%; right:-6%">Open now · 24 hrs</span>
         </div>
@@ -233,7 +291,7 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <div class="footer-logo"><img src="assets/Relief%20Feet%20Wellness%20Logo.png" alt="Relief Feet Wellness" width="2079" height="756" loading="lazy" /></div>
+          <a class="footer-logo" href="index.html" aria-label="Relief Feet home"><img src="assets/Relief%20Feet%20Wellness%20Logo.png" alt="Relief Feet Wellness" width="2079" height="756" loading="lazy" decoding="async" /></a>
           <p style="margin-top:1rem;max-width:38ch">Reflexology &amp; drug-free pain relief. C46, Main Rd, East Extension, MGR Nagar, Kolathur, Chennai 600099.</p>
           <p class="open-now">Open 24 hours, all days</p>
         </div>
